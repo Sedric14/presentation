@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1 class="r-fit-text" style="color:chartreuse">SVG</h1>
+					<p>in your site</p>
+				</section>
+				<section>
+					<pre><code data-trim data-noescape><script type="text/template">
+						<?xml-stylesheet type="text/css" href="svgstyle.css"?>
+					</script></code>
+				</section>
+				<section>
+					<h2>Icon Font</h2>
+					<img src="./assets/pic1.jpg" style="width: 80%;">
+				</section>
+				<section style="color: red;">Only one color !!!</section>
+				<section>
+					<ul>
+						<li class="fragment">http://fontello.com</li>
+						<li class="fragment">https://icomoon.io/app</li>
+					</ul>
+				</section>
+				<section>
+					<ul>
+						<li style="text-decoration:line-through; color: crimson;">circle</li>
+						<li style="text-decoration:line-through; color: crimson;">rect</li>
+						<li style="text-decoration:line-through; color: crimson;">stroke</li>
+						<li style="text-decoration:line-through; color: crimson;">stroke-width</li>
+						<li style="text-decoration:line-through; color: crimson;">fill</li>
+						<li style="text-decoration:line-through; color: crimson;">fill-rule</li>
+					</ul>
+				</section>
+				<section>
+					<p>Pros and Cons:</p>
+					<ul style="list-style-type: none; font: 0.8em sans-serif;">
+						<li style="color: darkgreen;">+ the icon behaves like a font symbol, and all parameters are configured in the same way via CSS
+							(size, color, alignment, etc.)</li>
+						<li style="color: darkgreen;">+ the only way that works in IE 8 without additional manipulations</li>
+						<li style="color: #cf5050;">- all elements of the SVG file are combined into one symbol, so it can only be controlled
+							using CSS or JS as a single whole</li>
+						<li style="color: #cf5050;">- only single-color icons are supported</li>
+						<li style="color: #cf5050;">- if the font loading fails, the user will either not see the icons at all, or,
+							if the icon codes match the Unicode characters, the corresponding characters will be displayed</li>
+					</ul>
+				</section>
+				<section><h2 style="color: chartreuse;">SVG as OBJECT</h2></section>
+				<section>
+					<pre><code data-trim data-noescape><script type="text/template">
+						<object type="image/svg+xml" data="your.svg" id="object"
+						 class="icon"></object>
+					</script></code>
+				</section>
+				<section>
+					<pre style="width: 80%;"><code  data-trim data-noescape><script type="text/template">
+						var object = document.getElementById("object");
+						    //get element object
+						var svgDocument = object.contentDocument;
+						    //get svg element inside object
+						var svgElement = svgDocument.getElementById("some_id_in_svg");
+						    //get any element inside svg
+						svgElement.setAttribute("fill", "black");
+						    //change the attributes of the selected element
+					</script></code>
+				</section>
+				<section>
+					https://www.w3.org/TR/SVG/styling.html
+				</section>
+				</section>
+				<section>
+					<img src="./assets/pic2.jpg" style="width: 80%;">
+				</section>
+				<section>
+					<pre><code data-trim data-noescape><script type="text/template">
+						transform: scale(2, 1);
+					</script></code>
+				</section>
+				<section>
+					<pre><code data-trim data-noescape><script type="text/template">
+						if (!Modernizr.svg) {
+							$(body).addClass(“no-svg”);
+						}
+					</script></code>
+					<pre><code data-trim data-noescape><script type="text/template">
+						.no-svg .icon {
+							width: 100px;
+							height: 100px;
+							background-image: url(“icon.png”);
+						}
+					</script></code>
+				</section>
+				<section>
+					<p>Pros and Cons:</p>
+					<ul style="list-style-type: none">
+						<li style="color: darkgreen;">+ you can use an external CSS file to manage styles</li>
+						<li style="color: darkgreen;">+ SVG animations and filters are supported</li>
+						<li style="color: darkgreen;">+ interactive animations are supported</li>
+						<li style="color: #cf5050;">- for IE 8 and below, a bitmap replacement is required</li>
+					</ul>
+				</section>
+				<section>
+					<h2 style="color: chartreuse;">SVG in IMG or background-image</h2>
+					<img src="./assets/pic3.jpg" style="width: 80%;">
+				</section>
+				<section>
+					<pre><code data-trim data-noescape><script type="text/template">
+						<img src="icon.svg">
+					</script></code>
+				</section>
+				<section>
+					<pre><code data-trim data-noescape><script type="text/template">
+						<div class="icon"></div>
+					</script></code>
+					<pre><code data-trim data-noescape><script type="text/template">
+						.icon {
+							background-image: url("icon.svg");
+							width: 90px;
+							height: 150px;
+						}
+					</script></code>
+				</section>
+				<section>
+					<pre><code data-trim data-noescape><script type="text/template">
+						background-size: 90px 150px;
+					</script></code>
+				</section>
+				<section>
+					<pre><code data-trim data-noescape><script type="text/template">
+						.icon {
+							background-image: url("icon.png");
+						}
+						@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+							only screen and (min--moz-device-pixel-ratio: 1.5),
+							only screen and (-o-device-pixel-ratio: 3/2), 
+							only screen and (min-device-pixel-ratio: 1.5) {
+							.icon {
+								background-image: url("icon.svg");
+							}
+						}
+					</script></code>
+				</section>
+				<section>
+					<p>Pros and Cons:</p>
+					<ul style="list-style-type: none">
+						<li style="color: darkgreen;">+ SVG animations and filters are supported</li>
+						<li style="color: darkgreen;">+ in the case of background-image, you can use SVG sprites</li>
+						<li style="color: #cf5050;">- you can not change the properties of SVG elements through CSS or JS</li>
+						<li style="color: #cf5050;">- interactive animations are not supported</li>
+						<li style="color: #cf5050;">- for IE 8 and below, a bitmap replacement is required</li>
+					</ul>
+				</section>
+				<section>
+					<h2 style="color: chartreuse;">Inline SVG</h2>
+					<img src="./assets/pic3.jpg" style="width: 80%;">
+				</section>
+				<section>
+					<pre><code data-trim data-noescape><script type="text/template">
+						<svg><use x="0" y="0" xlink:href="#some_svg_element_id" /></svg>
+					</script></code>
+				</section>
+				<section>
+					<pre><code data-trim data-noescape><script type="text/template">
+						<svg><use x="0" y="0" xlink:href="#some_svg_element_id"
+							 transform="scale(0.5)" /></svg>
+					</script></code>
+				</section>
+				<section>
+					<pre><code data-trim data-noescape><script type="text/template">
+						<div class="my-svg-alternate"></div>
+
+						if (!Modernizr.svg) {
+							$(body).addClass(“no-svg”);
+						}
+
+						.no-svg .my-svg-alternate {
+							display: block;
+							width: 100px;
+							height: 100px;
+							background-image: url(image.png);
+						}
+					</script></code>
+				</section>
+				<section>
+					<p>Pros and Cons:</p>
+					<ul style="list-style-type: none">
+						<li style="color: darkgreen;">+ no loading of external files</li>
+						<li style="color: darkgreen;">+ manipulations with SVG elements are available through CSS and JS</li>
+						<li style="color: darkgreen;">+ SVG animations and filters are supported</li>
+						<li style="color: darkgreen;">+ interactive animations are supported</li>
+						<li style="color: darkgreen;">+ the ability to reuse elements</li>
+						<li style="color: #cf5050;">- the code of the page is polluted</li>
+						<li style="color: #cf5050;">- for IE 8 and below, additional markup is required, and replacement with a bitmap</li>
+					</ul>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
